@@ -19,20 +19,25 @@ export class TodoService {
   constructor(private  http: HttpClient) {
   }
 
-  // GET Todos
+  // GET Request: Read the TodoList specifying a limit
   getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(`${this.todosURL}${this.todosLimit}`);
   }
 
-  // DELETE TodoItem
-  deleteTodo(todo: Todo): Observable<Todo> {
-    const url = `${this.todosURL}/${todo.id}`;
-    return this.http.delete<Todo>(url, httpOptions);
+  // POST Request: Create a new TodoItem
+  addTodo(todo: Todo): Observable<Todo> {
+    return this.http.post<Todo>(this.todosURL, todo, httpOptions);
   }
 
-  // Toggle completed
+  // PUT Request: Update TodoItem toggle completed
   toggleCompleted(todo: Todo): Observable<any> {
     const url = `${this.todosURL}/${todo.id}`;
     return this.http.put(url, todo, httpOptions);
+  }
+
+  // DELETE Request: Delete an entry of TodoList
+  deleteTodo(todo: Todo): Observable<Todo> {
+    const url = `${this.todosURL}/${todo.id}`;
+    return this.http.delete<Todo>(url, httpOptions);
   }
 }
